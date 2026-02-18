@@ -1,0 +1,934 @@
+/* ===== СЕГМЕНТ 1: CSS Variables & Reset ===== */
+:root {
+    --soft-purple: #f3e8ff;
+    --lavender: #e5d5ff;
+    --light-lavender: #f1e6ff;
+    --soft-blue: #d5e9ff;
+    --light-blue: #e8f1ff;
+    --primary-purple: #9f7aea;
+    --primary-blue: #63b3ed;
+    --gradient-1: linear-gradient(135deg, #f3e8ff 0%, #d5e9ff 100%);
+    --gradient-2: linear-gradient(135deg, #9f7aea 0%, #63b3ed 100%);
+    --text-dark: #2d3748;
+    --text-light: #718096;
+    --white: #ffffff;
+    --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 10px 15px rgba(159, 122, 234, 0.1);
+    --shadow-lg: 0 20px 25px -5px rgba(159, 122, 234, 0.2);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    color: var(--text-dark);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* Визуально скрытый элемент для SEO */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+    clip: rect(0, 0, 0, 0);
+}
+
+/* ===== СЕГМЕНТ 2: Preloader ===== */
+.preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.5s;
+}
+
+.preloader.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.preloader-spinner {
+    width: 50px;
+    height: 50px;
+    border: 3px solid var(--soft-purple);
+    border-top-color: var(--primary-purple);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ===== СЕГМЕНТ 3: Navigation ===== */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s;
+}
+
+.navbar.scrolled {
+    padding: 10px 0;
+    background: rgba(255, 255, 255, 0.98);
+}
+
+.nav-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+}
+
+.logo-img {
+    height: 50px;
+    width: auto;
+    border-radius: 8px;
+}
+
+.logo-text {
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: var(--gradient-2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    list-style: none;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: var(--text-dark);
+    font-weight: 500;
+    transition: color 0.3s;
+    position: relative;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--gradient-2);
+    transition: width 0.3s;
+}
+
+.nav-link:hover {
+    color: var(--primary-purple);
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+.nav-phone .btn {
+    padding: 10px 20px;
+    font-size: 0.95rem;
+}
+
+.mobile-menu-btn {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.mobile-menu-btn span {
+    width: 25px;
+    height: 2px;
+    background: var(--text-dark);
+    transition: 0.3s;
+}
+
+/* ===== СЕГМЕНТ 4: Buttons ===== */
+.btn {
+    display: inline-block;
+    padding: 14px 32px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.btn-primary {
+    background: var(--gradient-2);
+    color: var(--white);
+    box-shadow: 0 10px 20px -5px rgba(159, 122, 234, 0.4);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 25px -5px rgba(159, 122, 234, 0.5);
+}
+
+.btn-outline {
+    background: transparent;
+    border: 2px solid var(--primary-purple);
+    color: var(--primary-purple);
+}
+
+.btn-outline:hover {
+    background: var(--primary-purple);
+    color: var(--white);
+}
+
+.btn-block {
+    width: 100%;
+}
+
+/* ===== СЕГМЕНТ 5: Header ===== */
+.header {
+    position: relative;
+    width: 100%;
+    background: var(--gradient-1);
+    padding-top: 80px;
+}
+
+.header-image-wrapper {
+    position: relative;
+    width: 100%;
+    max-height: 768px;
+    overflow: hidden;
+}
+
+.header-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+    max-height: 768px;
+}
+
+.header-wave {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    line-height: 0;
+    z-index: 2;
+    transform: translateY(1px);
+}
+
+.header-wave svg {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* ===== СЕГМЕНТ 6: Sections General ===== */
+.section {
+    padding: 60px 0;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.section-subtitle {
+    font-size: 1.1rem;
+    color: var(--primary-purple);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.section-title {
+    font-size: clamp(2rem, 5vw, 2.8rem);
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--text-dark);
+}
+
+.section-divider {
+    width: 80px;
+    height: 4px;
+    background: var(--gradient-2);
+    margin: 0 auto;
+    border-radius: 2px;
+}
+
+/* ===== СЕГМЕНТ 7: About Section ===== */
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.about-text {
+    font-size: 1.2rem;
+    color: var(--text-light);
+    margin-bottom: 30px;
+}
+.about-text strong {
+    color: var(--primary-purple);
+    font-size: 1.3rem;
+}
+
+.about-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: var(--gradient-2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: block;
+}
+
+.stat-label {
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+.about-image {
+    position: relative;
+    border-radius: 30px;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    max-width: 500px;
+    margin: 0 auto;
+}
+.about-image img {
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: cover;
+    display: block;
+    position: relative;
+    z-index: 1;
+    border-radius: 20px;
+}
+.about-image-bg {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: -20px;
+    bottom: -20px;
+    background: var(--gradient-1);
+    border-radius: 30px;
+    z-index: 0;
+}
+
+/* ===== СЕГМЕНТ 8: Services Section ===== */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+}
+
+.service-card {
+    background: var(--white);
+    padding: 20px 25px;
+    border-radius: 20px;
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    border-left: 4px solid transparent;
+    border-image: var(--gradient-2);
+    border-image-slice: 1;
+}
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-left: 4px solid;
+    border-image-source: var(--gradient-2);
+}
+
+.service-icon {
+    min-width: 60px;
+    width: 60px;
+    height: 60px;
+    background: var(--gradient-1);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.service-icon i {
+    font-size: 1.8rem;
+    background: var(--gradient-2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.service-content h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: var(--text-dark);
+    line-height: 1.3;
+}
+.service-content p {
+    color: var(--text-light);
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+.services-footer {
+    background: var(--gradient-1);
+    padding: 30px;
+    border-radius: 30px;
+    margin-top: 40px;
+    text-align: center;
+}
+.services-footer p {
+    font-size: 1.2rem;
+    color: var(--text-light);
+    margin: 0;
+}
+.services-footer strong {
+    color: var(--primary-purple);
+}
+
+/* ===== СЕГМЕНТ 9: Advantages Section ===== */
+.advantages {
+    background: var(--gradient-1);
+}
+
+.advantages-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.advantage-card {
+    background: var(--white);
+    padding: 35px 25px;
+    border-radius: 25px;
+    text-align: center;
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s;
+}
+.advantage-card:hover {
+    transform: translateY(-7px);
+    box-shadow: var(--shadow-lg);
+}
+
+.advantage-emoji {
+    font-size: 3.5rem;
+    margin-bottom: 15px;
+}
+
+.advantage-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    color: var(--text-dark);
+}
+
+.advantage-card p {
+    color: var(--text-light);
+    font-size: 0.95rem;
+}
+
+.advantages-quote {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 30px 40px;
+    background: var(--white);
+    border-radius: 50px;
+    box-shadow: var(--shadow-md);
+}
+.advantages-quote p {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
+/* ===== СЕГМЕНТ 10: Contacts Section ===== */
+.contacts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}
+
+.contacts-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.contact-item {
+    display: flex;
+    gap: 20px;
+    padding: 25px;
+    background: var(--white);
+    border-radius: 20px;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s;
+}
+.contact-item:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.contact-icon {
+    min-width: 55px;
+    width: 55px;
+    height: 55px;
+    background: var(--gradient-1);
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.contact-icon i {
+    font-size: 1.6rem;
+    background: var(--gradient-2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.contact-details h3 {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+    color: var(--text-dark);
+}
+
+.contact-link {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--primary-purple);
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 5px;
+    transition: color 0.3s;
+}
+.contact-link:hover {
+    color: var(--primary-blue);
+}
+
+.contact-note {
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+.contact-details p {
+    color: var(--text-light);
+    margin-bottom: 8px;
+}
+.contact-details p:last-child {
+    margin-bottom: 0;
+}
+
+.social-links {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.social-link {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    text-decoration: none;
+    transition: all 0.3s;
+    font-size: 1.3rem;
+}
+.social-link.vk { background: #4a76a8; }
+.social-link.tg { background: #0088cc; }
+.social-link.ig { background: linear-gradient(45deg, #f09433, #d62976, #962fbf, #4f5bd5); }
+.social-link:hover {
+    transform: translateY(-3px);
+    filter: brightness(1.1);
+}
+
+.messenger-block {
+    
+}
+.messenger-details {
+    flex: 1;
+}
+.messenger-buttons {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+.messenger-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 40px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s;
+    border: none;
+}
+.messenger-btn i {
+    font-size: 1.2rem;
+}
+.messenger-btn.tg {
+    background: #0088cc;
+    color: white;
+    box-shadow: 0 5px 10px rgba(0, 136, 204, 0.2);
+}
+.messenger-btn.tg:hover {
+    background: #0077b5;
+    transform: translateY(-2px);
+}
+.messenger-btn.max {
+    background: linear-gradient(135deg, #2AABEE, #229ED9);
+    color: white;
+    box-shadow: 0 5px 10px rgba(42, 171, 238, 0.2);
+}
+.messenger-btn.max:hover {
+    transform: translateY(-2px);
+}
+
+/* Contact Form */
+.contact-form {
+    background: var(--white);
+    padding: 35px;
+    border-radius: 25px;
+    box-shadow: var(--shadow-lg);
+}
+.contact-form h3 {
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+    color: var(--text-dark);
+}
+.contact-form p {
+    color: var(--text-light);
+    margin-bottom: 25px;
+}
+.form-group {
+    margin-bottom: 20px;
+}
+.form-group input {
+    width: 100%;
+    padding: 14px 20px;
+    border: 2px solid var(--soft-purple);
+    border-radius: 15px;
+    font-size: 1rem;
+    transition: all 0.3s;
+    font-family: 'Inter', sans-serif;
+}
+.form-group input:focus {
+    outline: none;
+    border-color: var(--primary-purple);
+    box-shadow: 0 0 0 3px rgba(159, 122, 234, 0.1);
+}
+
+/* ===== СЕГМЕНТ 11: Footer ===== */
+.footer {
+    background: var(--text-dark);
+    color: var(--white);
+    padding: 60px 0 30px;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.footer-logo img {
+    height: 40px;
+    width: auto;
+    border-radius: 6px;
+}
+.footer-logo span {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.footer-links {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.footer-links a {
+    color: var(--soft-blue);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+.footer-links a:hover {
+    color: var(--white);
+}
+
+.footer-copyright {
+    text-align: center;
+    color: var(--soft-blue);
+    font-size: 0.9rem;
+}
+
+/* ===== СЕГМЕНТ 12: Scroll Top Button ===== */
+.scroll-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: var(--gradient-2);
+    border: none;
+    border-radius: 50%;
+    color: var(--white);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+    z-index: 999;
+    box-shadow: var(--shadow-lg);
+}
+.scroll-top.show {
+    opacity: 1;
+    visibility: visible;
+}
+.scroll-top:hover {
+    transform: translateY(-5px);
+}
+
+/* ===== СЕГМЕНТ 13: Responsive Styles ===== */
+@media (max-width: 1024px) {
+    .about-grid,
+    .contacts-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    .about-image {
+        order: -1;
+        max-width: 450px;
+    }
+    .advantages-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .mobile-menu-btn {
+        display: flex;
+    }
+    .nav-menu {
+        position: fixed;
+        top: 80px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 80px);
+        background: var(--white);
+        flex-direction: column;
+        justify-content: flex-start;
+        padding: 40px 24px;
+        transition: left 0.3s;
+        box-shadow: var(--shadow-lg);
+        overflow-y: auto;
+    }
+    .nav-menu.active {
+        left: 0;
+    }
+    .mobile-menu-btn.active span:nth-child(1) {
+        transform: rotate(45deg) translate(8px, 8px);
+    }
+    .mobile-menu-btn.active span:nth-child(2) {
+        opacity: 0;
+    }
+    .mobile-menu-btn.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(8px, -8px);
+    }
+
+    /* Стили для иконок в навбаре рядом с бургером */
+    .nav-messenger-icons {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-left: 90px;
+    }
+    .nav-icon-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        text-decoration: none;
+        font-size: 1.2rem;
+        transition: all 0.2s;
+        box-shadow: var(--shadow-sm);
+        background-size: cover;
+        background-position: center;
+    }
+    .nav-icon-btn.tg {
+        background: #0088cc;
+    }
+    .nav-icon-btn.max {
+        background-image: url('../images/max.jpg'); /* Путь к вашему изображению */
+        background-size: cover;
+        background-position: center;
+        background-color: transparent; /* Убираем фон, если нужно показать именно картинку */
+        /* Если картинка не квадратная, можно добавить фон подложку */
+    }
+    .nav-icon-btn.max i {
+        display: none; /* Скрываем иконку Font Awesome, если она есть */
+    }
+    .nav-icon-btn:hover {
+        transform: scale(1.1);
+    }
+
+    .logo-text {
+        font-size: 1rem;
+    }
+    .logo-img {
+        height: 40px;
+    }
+
+    .section {
+        padding: 40px 0;
+    }
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+    .service-card {
+        padding: 15px 20px;
+    }
+    .advantages-grid {
+        grid-template-columns: 1fr;
+    }
+    .contacts-info {
+        gap: 20px;
+    }
+    .contact-item {
+        flex-direction: row;
+        align-items: flex-start;
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-image-wrapper {
+        max-height: 300px;
+    }
+    .header-img {
+        max-height: 300px;
+    }
+    .about-stats {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+    .stat-number {
+        font-size: 1.8rem;
+    }
+    .stat-label {
+        font-size: 0.8rem;
+    }
+    .about-image {
+        max-width: 300px;
+    }
+    .about-image img {
+        max-height: 300px;
+    }
+    .service-card {
+        gap: 15px;
+    }
+    .service-icon {
+        min-width: 50px;
+        width: 50px;
+        height: 50px;
+    }
+    .service-icon i {
+        font-size: 1.5rem;
+    }
+    .service-content h3 {
+        font-size: 1.1rem;
+    }
+    .service-content p {
+        font-size: 0.9rem;
+    }
+    .messenger-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .messenger-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    .contact-form {
+        padding: 25px 20px;
+    }
+}
