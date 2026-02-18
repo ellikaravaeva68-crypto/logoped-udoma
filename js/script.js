@@ -122,6 +122,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
+    
     window.addEventListener('scroll', updateActiveLink);
     updateActiveLink();
 
@@ -135,22 +136,15 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // ===== СЕГМЕНТ 10: MAX Links Update (Placeholder) =====
-    const maxLinks = document.querySelectorAll('#maxMessengerLink, #navMaxIcon');
-    // Раскомментируйте, когда будет готова ссылка:
-    // const maxUrl = 'https://ваш- url-для-max.com';
-    // maxLinks.forEach(link => {
-    //     if (link) link.href = maxUrl;
-    // });
-
-    // ===== СЕГМЕНТ 11: Year Auto-update every minute =====
+    // ===== СЕГМЕНТ 10: Year Auto-update every minute =====
     setInterval(setCurrentYear, 60000);
 });
 
-// Предотвращаем всплытие клика по меню, чтобы оно не закрывалось при клике внутри
+// ===== СЕГМЕНТ 11: Close Mobile Menu on Outside Click =====
 document.addEventListener('click', function(event) {
     const navMenu = document.getElementById('navMenu');
     const mobileBtn = document.getElementById('mobileMenuBtn');
+    
     if (navMenu && mobileBtn && navMenu.classList.contains('active') && 
         !navMenu.contains(event.target) && !mobileBtn.contains(event.target)) {
         mobileBtn.classList.remove('active');
