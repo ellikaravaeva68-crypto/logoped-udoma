@@ -1,12 +1,10 @@
 // ===== СЕГМЕНТ 1: Initialization & Global Functions =====
-// Инициализация AOS (библиотека анимаций)
 AOS.init({
     duration: 800,
     once: true,
     offset: 100
 });
 
-// Функция установки текущего года в футере
 function setCurrentYear() {
     const yearElement = document.getElementById('currentYear');
     if (yearElement) {
@@ -16,7 +14,6 @@ function setCurrentYear() {
 
 // ===== СЕГМЕНТ 2: DOM Content Loaded =====
 document.addEventListener('DOMContentLoaded', function () {
-    // Элементы навигации
     const navbar = document.querySelector('.navbar');
     const mobileBtn = document.getElementById('mobileMenuBtn');
     const navMenu = document.getElementById('navMenu');
@@ -24,7 +21,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const scrollTopBtn = document.getElementById('scrollTop');
     const preloader = document.querySelector('.preloader');
 
-    // Устанавливаем год
     setCurrentYear();
 
     // ===== СЕГМЕНТ 3: Preloader =====
@@ -45,7 +41,6 @@ document.addEventListener('DOMContentLoaded', function () {
             navbar.classList.remove('scrolled');
         }
 
-        // Кнопка "Наверх"
         if (window.scrollY > 500) {
             scrollTopBtn.classList.add('show');
         } else {
@@ -68,14 +63,12 @@ document.addEventListener('DOMContentLoaded', function () {
         link.addEventListener('click', function (e) {
             e.preventDefault();
 
-            // Закрываем мобильное меню
             if (mobileBtn && mobileBtn.classList.contains('active')) {
                 mobileBtn.classList.remove('active');
                 navMenu.classList.remove('active');
                 document.body.classList.remove('no-scroll');
             }
 
-            // Плавный скролл к секции
             const targetId = this.getAttribute('href');
             const targetSection = document.querySelector(targetId);
 
@@ -122,18 +115,116 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
-    
+
     window.addEventListener('scroll', updateActiveLink);
     updateActiveLink();
 
-    // ===== СЕГМЕНТ 9: Form Submission (Demo) =====
+    // ===== СЕГМЕНТ 9: Form Submission to Telegram =====
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwAkeJZ9nAbpJ1cNARJOzYVBStQeSpIyN3G7u7F9XSsByk14dgoh8e5TqE7waSAM4lm/exec';
+
     const callbackForm = document.getElementById('callbackForm');
     if (callbackForm) {
-        callbackForm.addEventListener('submit', function (e) {
+        const phoneInput = callbackForm.querySelector('input[type="tel"]');
+        if (phoneInput) {
+            phoneInput.addEventListener('input', function (e) {
+                let value = this.value.replace(/\D/g, '');
+                if (value.length > 11) value = value.slice(0, 11);
+
+                if (value.length > 0) {
+                    if (value.length <= 1) {
+                        value = '+7';
+                    } else if (value.length <= 4) {
+                        value = '+7 (' + value.slice(1, 4);
+                    } else if (value.length <= 7) {
+                        value = '+7 (' + value.slice(1, 4) + ') ' + value.slice(4, 7);
+                    } else {
+                        value = '+7 (' + value.slice(1, 4) + ') ' + value.slice(4, 7) + '-' + value.slice(7, 9) + '-' + value.slice(9, 11);
+                    }
+                }
+                this.value = value;
+            });
+        }
+
+        callbackForm.addEventListener('submit', async function (e) {
             e.preventDefault();
-            alert('Спасибо! Мы свяжемся с вами в ближайшее время.');
-            this.reset();
+
+            const nameInput = this.querySelector('input[type="text"]');
+            const phoneInput = this.querySelector('input[type="tel"]');
+
+            const name = nameInput.value.trim();
+            const phone = phoneInput.value.trim();
+
+            if (!name || !phone) {
+                showNotification('Пожалуйста, заполните имя и телефон', 'error');
+                return;
+            }
+
+            const digitCount = (phone.match(/\d/g) || []).length;
+            if (digitCount < 10) {
+                showNotification('Пожалуйста, введите корректный номер телефона', 'error');
+                return;
+            }
+
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Отправка...';
+            submitBtn.disabled = true;
+
+            setTimeout(async () => {
+                try {
+                    const formData = {
+                        name: name,
+                        phone: phone,
+                        message: 'Заявка с сайта Логопед у дома',
+                        source: 'logoped-website'
+                    };
+
+                    await fetch(APPS_SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(formData)
+                    });
+
+                    showNotification('Спасибо! Мы свяжемся с вами в ближайшее время.', 'success');
+                    this.reset();
+
+                } catch (error) {
+                    showNotification('Произошла ошибка. Попробуйте позже или позвоните нам.', 'error');
+                } finally {
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                }
+            }, 100);
         });
+    }
+
+    function showNotification(message, type = 'success') {
+        let container = document.querySelector('.notification-container');
+
+        if (!container) {
+            container = document.createElement('div');
+            container.className = 'notification-container';
+            document.body.appendChild(container);
+        }
+
+        const notification = document.createElement('div');
+        notification.className = `notification notification-${type}`;
+        notification.innerHTML = `
+        <div class="notification-content">
+            <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+            <span>${message}</span>
+        </div>
+    `;
+
+        container.appendChild(notification);
+        setTimeout(() => notification.classList.add('show'), 10);
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => notification.remove(), 300);
+        }, 4000);
     }
 
     // ===== СЕГМЕНТ 10: Year Auto-update every minute =====
@@ -141,11 +232,11 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // ===== СЕГМЕНТ 11: Close Mobile Menu on Outside Click =====
-document.addEventListener('click', function(event) {
+document.addEventListener('click', function (event) {
     const navMenu = document.getElementById('navMenu');
     const mobileBtn = document.getElementById('mobileMenuBtn');
-    
-    if (navMenu && mobileBtn && navMenu.classList.contains('active') && 
+
+    if (navMenu && mobileBtn && navMenu.classList.contains('active') &&
         !navMenu.contains(event.target) && !mobileBtn.contains(event.target)) {
         mobileBtn.classList.remove('active');
         navMenu.classList.remove('active');

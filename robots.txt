@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://logoped-udoma.ru/sitemap.xml
