@@ -538,7 +538,6 @@ body {
     color: var(--text-dark);
 }
 
-/* Контейнер для Яндекс рейтинга */
 .yandex-rating-container {
     max-width: 300px;
     margin: 0 auto;
@@ -707,7 +706,6 @@ body {
     filter: brightness(1.1);
 }
 
-/* Блок "Напишите нам" */
 .messenger-buttons {
     display: flex;
     gap: 15px;
@@ -767,7 +765,6 @@ body {
     object-fit: cover;
 }
 
-/* Contact Form */
 .contact-form {
     background: var(--white);
     padding: 35px;
@@ -943,7 +940,6 @@ body {
 /* ===== МОБИЛЬНЫЕ СТИЛИ ===== */
 @media (max-width: 768px) {
 
-    /* Убираем padding у container для навбара */
     .navbar .container {
         padding-left: 15px;
         padding-right: 15px;
@@ -960,7 +956,6 @@ body {
         height: 60px;
     }
 
-    /* Логотип с текстом - уменьшаем текст */
     .logo {
         display: flex;
         align-items: center;
@@ -978,27 +973,22 @@ body {
 
     .logo-text {
         font-size: 0.8rem;
-        /* Уменьшаем текст */
         white-space: normal;
-        /* Разрешаем перенос */
         line-height: 1.2;
         max-width: 85px;
         display: block;
-        /* Показываем текст */
         background: var(--gradient-2);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
     }
 
-    /* Иконки мессенджеров - смещаем вправо */
     .nav-messenger-icons {
         display: flex;
         align-items: center;
         gap: 4px;
         flex-shrink: 0;
         margin-left: auto;
-        /* Прижимаем к бургеру */
     }
 
     .nav-icon-btn {
@@ -1260,7 +1250,6 @@ body {
     }
 }
 
-/* ===== ПЛАНШЕТЫ (чуть больше текст) ===== */
 @media (min-width: 481px) and (max-width: 768px) {
     .logo-text {
         font-size: 0.9rem;
@@ -1268,7 +1257,6 @@ body {
     }
 }
 
-/* ===== ЯВНО СКРЫВАЕМ БУРГЕР НА ПК ===== */
 @media (min-width: 769px) {
     .mobile-menu-btn {
         display: none !important;
