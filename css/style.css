@@ -23,6 +23,14 @@
     box-sizing: border-box;
 }
 
+/* ГАРАНТИРОВАННО УБИРАЕМ ГОРИЗОНТАЛЬНЫЙ СКРОЛЛ */
+html, body {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
+    position: relative;
+}
+
 html {
     scroll-behavior: smooth;
     scroll-padding-top: 80px;
@@ -98,6 +106,7 @@ body {
     z-index: 1000;
     box-shadow: var(--shadow-sm);
     transition: all 0.3s;
+    overflow-x: hidden;
 }
 
 .navbar.scrolled {
@@ -184,7 +193,7 @@ body {
 }
 
 .mobile-menu-btn span {
-    width: 24px;
+    width: 25px;
     height: 2px;
     background: var(--text-dark);
     transition: 0.3s;
@@ -866,13 +875,6 @@ body {
     opacity: 0.8;
 }
 
-.footer-copyright {
-    text-align: center;
-    color: var(--soft-blue);
-    font-size: 0.9rem;
-    opacity: 0.8;
-}
-
 .footer-copyright p {
     margin: 5px 0;
 }
@@ -883,7 +885,6 @@ body {
     margin: 0 auto 10px;
     line-height: 1.4;
 }
-
 
 /* ===== СЕГМЕНТ 12: Scroll Top Button ===== */
 .scroll-top {
@@ -936,26 +937,103 @@ body {
     }
 }
 
+/* ===== МОБИЛЬНЫЕ СТИЛИ ===== */
 @media (max-width: 768px) {
-    .mobile-menu-btn {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-        background: none;
-        border: none;
-        cursor: pointer;
-        padding: 8px 4px;
-        flex-shrink: 0;
+    /* Убираем padding у container для навбара */
+    .navbar .container {
+        padding-left: 12px;
+        padding-right: 12px;
+        max-width: 100%;
+        width: 100%;
     }
-
+    
     .nav-wrapper {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        gap: 8px;
         width: 100%;
+        gap: 4px;
+        height: 60px;
     }
-
+    
+    /* Логотип - только картинка */
+    .logo {
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+        gap: 0;
+    }
+    
+    .logo-img {
+        height: 38px;
+        width: auto;
+        border-radius: 6px;
+    }
+    
+    .logo-text {
+        display: none; /* Скрываем текст на мобильных */
+    }
+    
+    /* Иконки мессенджеров - показываем */
+    .nav-messenger-icons {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+        flex-shrink: 0;
+    }
+    
+    .nav-icon-btn {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        text-decoration: none;
+        font-size: 1rem;
+        flex-shrink: 0;
+    }
+    
+    .nav-icon-btn.tg {
+        background: #0088cc;
+    }
+    
+    .nav-icon-btn.tg i {
+        font-size: 0.95rem;
+    }
+    
+    .nav-icon-btn.max {
+        background-image: url('../images/max.jpg');
+        background-size: cover;
+        background-position: center;
+    }
+    
+    .nav-icon-btn.max i {
+        display: none;
+    }
+    
+    /* Бургер-меню */
+    .mobile-menu-btn {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 8px 2px 8px 4px;
+        flex-shrink: 0;
+    }
+    
+    .mobile-menu-btn span {
+        width: 20px;
+        height: 2px;
+        background: var(--text-dark);
+        display: block;
+        transition: 0.3s;
+    }
+    
+    /* Меню */
     .nav-menu {
         position: fixed;
         top: 60px;
@@ -965,128 +1043,75 @@ body {
         background: var(--white);
         flex-direction: column;
         justify-content: flex-start;
-        padding: 40px 24px;
-        transition: left 0.3s;
+        padding: 40px 20px;
+        transition: left 0.3s ease;
         box-shadow: var(--shadow-lg);
         overflow-y: auto;
         margin: 0;
+        list-style: none;
+        z-index: 999;
     }
-
+    
     .nav-menu.active {
         left: 0;
     }
-
-    .mobile-menu-btn.active span:nth-child(1) {
-        transform: rotate(45deg) translate(8px, 8px);
+    
+    .nav-link {
+        font-size: 1.1rem;
+        padding: 12px 0;
+        display: block;
     }
-
+    
+    /* Стили для активного бургера */
+    .mobile-menu-btn.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+    
     .mobile-menu-btn.active span:nth-child(2) {
         opacity: 0;
     }
-
+    
     .mobile-menu-btn.active span:nth-child(3) {
-        transform: rotate(-45deg) translate(8px, -8px);
+        transform: rotate(-45deg) translate(5px, -5px);
     }
-
-    .nav-messenger-icons {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        flex-shrink: 0;
-        margin-left: auto;
+    
+    /* Запрещаем скролл body когда меню открыто */
+    body.no-scroll {
+        overflow: hidden;
     }
-
-    .nav-icon-btn {
-        width: 38px;
-        height: 38px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        text-decoration: none;
-        font-size: 1.1rem;
-        flex-shrink: 0;
-    }
-
-    .logo {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        flex-shrink: 0;
-        max-width: fit-content;
-    }
-
-    .logo-text {
-        display: none;
-    }
-
-    .logo-img {
-        height: 40px;
-        width: auto;
-        border-radius: 8px;
-        flex-shrink: 0;
-    }
-
-    .nav-icon-btn.tg {
-        background: #0088cc;
-    }
-
-    .nav-icon-btn.tg i {
-        display: block;
-        font-size: 1rem;
-    }
-
-    .nav-icon-btn.max {
-        background-image: url('../images/max.jpg');
-        background-size: cover;
-        background-position: center;
-    }
-
-    .nav-icon-btn.max i {
-        display: none;
-    }
-
-    .nav-icon-btn:hover {
-        transform: scale(1.1);
-    }
-
+    
+    /* Секции */
     .section {
         padding: 40px 0;
     }
-
+    
     .services-grid {
         grid-template-columns: 1fr;
     }
-
+    
     .service-card {
         padding: 20px;
     }
-
+    
     .advantages-grid {
         grid-template-columns: 1fr;
     }
-
+    
     .advantages-quote p {
         font-size: 1rem;
     }
-
+    
     .rating-label,
     .rating-link {
         white-space: normal;
         text-align: center;
         font-size: 0.9rem;
     }
-
-    .rating-link {
-        white-space: normal;
-        line-height: 1.4;
-    }
-
+    
     .contacts-info {
         gap: 20px;
     }
-
+    
     .contact-item {
         flex-direction: row;
         align-items: flex-start;
@@ -1094,82 +1119,131 @@ body {
     }
 }
 
+/* ===== ОЧЕНЬ МАЛЕНЬКИЕ ЭКРАНЫ ===== */
+@media (max-width: 360px) {
+    .navbar .container {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+    
+    .logo-img {
+        height: 34px;
+    }
+    
+    .nav-icon-btn {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .mobile-menu-btn {
+        padding: 6px 0px 6px 2px;
+    }
+    
+    .mobile-menu-btn span {
+        width: 18px;
+    }
+}
+
 @media (max-width: 480px) {
     .header-image-wrapper {
         max-height: 300px;
     }
-
+    
     .header-img {
         max-height: 300px;
     }
-
+    
     .about-stats {
         grid-template-columns: repeat(3, 1fr);
         gap: 10px;
     }
-
+    
     .stat-number {
         font-size: 1.8rem;
     }
-
+    
     .stat-label {
         font-size: 0.8rem;
     }
-
+    
     .about-image {
         max-width: 300px;
     }
-
+    
     .about-image img {
         max-height: 300px;
     }
-
+    
     .service-card {
         gap: 15px;
     }
-
+    
     .service-icon {
         min-width: 50px;
         width: 50px;
         height: 50px;
     }
-
+    
     .service-icon i {
         font-size: 1.5rem;
     }
-
+    
     .service-content h3 {
         font-size: 1.1rem;
     }
-
+    
     .service-content p {
         font-size: 0.9rem;
     }
-
+    
     .messenger-buttons {
         flex-direction: column;
         gap: 10px;
     }
-
+    
     .messenger-btn {
         width: 100%;
         justify-content: center;
     }
-
+    
     .contact-form {
         padding: 25px 20px;
     }
-
+    
     .footer-links {
         gap: 5px;
     }
-
+    
     .footer-links a {
         font-size: 0.9rem;
         padding: 5px 8px;
     }
 }
 
+/* ===== ПЛАНШЕТЫ (текст логотипа показываем) ===== */
+@media (min-width: 481px) and (max-width: 768px) {
+    .logo-text {
+        display: inline-block;
+        font-size: 1rem;
+        max-width: 120px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    .logo-img {
+        height: 40px;
+    }
+}
+
+/* ===== ЯВНО СКРЫВАЕМ БУРГЕР НА ПК ===== */
+@media (min-width: 769px) {
+    .mobile-menu-btn {
+        display: none !important;
+    }
+}
+
+/* ===== СЕГМЕНТ 14: Signature ===== */
 .dg-signature {
     display: flex;
     justify-content: center;
@@ -1293,7 +1367,7 @@ body {
         right: 10px;
         left: 10px;
     }
-
+    
     .notification {
         max-width: 100%;
         padding: 14px 18px;
