@@ -184,7 +184,7 @@ body {
 }
 
 .mobile-menu-btn span {
-    width: 25px;
+    width: 24px;
     height: 2px;
     background: var(--text-dark);
     transition: 0.3s;
@@ -939,11 +939,21 @@ body {
 @media (max-width: 768px) {
     .mobile-menu-btn {
         display: flex;
+        flex-direction: column;
+        gap: 5px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 8px 4px;
         flex-shrink: 0;
     }
 
     .nav-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         gap: 8px;
+        width: 100%;
     }
 
     .nav-menu {
@@ -981,14 +991,14 @@ body {
     .nav-messenger-icons {
         display: flex;
         align-items: center;
-        gap: 4px;
-        margin-left: auto;
+        gap: 6px;
         flex-shrink: 0;
+        margin-left: auto;
     }
 
     .nav-icon-btn {
-        width: 36px;
-        height: 36px;
+        width: 38px;
+        height: 38px;
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -996,30 +1006,25 @@ body {
         color: white;
         text-decoration: none;
         font-size: 1.1rem;
-        transition: all 0.2s;
-        box-shadow: var(--shadow-sm);
-        background-size: cover;
-        background-position: center;
         flex-shrink: 0;
     }
 
     .logo {
-        gap: 6px;
-        flex-shrink: 1;
-        min-width: 0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-shrink: 0;
+        max-width: fit-content;
     }
 
     .logo-text {
-        font-size: 0.9rem;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        max-width: 120px;
+        display: none;
     }
 
     .logo-img {
-        height: 35px;
+        height: 40px;
         width: auto;
+        border-radius: 8px;
         flex-shrink: 0;
     }
 
