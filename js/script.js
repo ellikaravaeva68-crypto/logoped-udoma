@@ -127,21 +127,9 @@ document.addEventListener('DOMContentLoaded', function () {
         const phoneInput = callbackForm.querySelector('input[type="tel"]');
         if (phoneInput) {
             phoneInput.addEventListener('input', function (e) {
-                let value = this.value.replace(/\D/g, '');
-                if (value.length > 11) value = value.slice(0, 11);
-
-                if (value.length > 0) {
-                    if (value.length <= 1) {
-                        value = '+7';
-                    } else if (value.length <= 4) {
-                        value = '+7 (' + value.slice(1, 4);
-                    } else if (value.length <= 7) {
-                        value = '+7 (' + value.slice(1, 4) + ') ' + value.slice(4, 7);
-                    } else {
-                        value = '+7 (' + value.slice(1, 4) + ') ' + value.slice(4, 7) + '-' + value.slice(7, 9) + '-' + value.slice(9, 11);
-                    }
+                if (this.value.length > 20) {
+                    this.value = this.value.slice(0, 20);
                 }
-                this.value = value;
             });
         }
 
