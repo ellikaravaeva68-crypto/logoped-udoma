@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', function () {
     updateActiveLink();
 
     // ===== СЕГМЕНТ 9: Form Submission to Telegram =====
-    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwAkeJZ9nAbpJ1cNARJOzYVBStQeSpIyN3G7u7F9XSsByk14dgoh8e5TqE7waSAM4lm/exec';
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz5WOfoyOdmccwYI2yz3La1MXsZA_zUaRyk9n6SFIxg7Yh98KQKQeX_TSDyI_IOB1buLQ/exec';
 
     const callbackForm = document.getElementById('callbackForm');
     if (callbackForm) {
